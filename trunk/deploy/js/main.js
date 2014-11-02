@@ -14,8 +14,7 @@ $(document).ready(function(){
     dancer = new Dancer();
     kick = dancer.createKick({
       onKick: function () {
-        var i;
-        console.log("KICK");
+        randomizeCubes();
       },
       offKick: decay,
       frequency: [2, 4]
@@ -27,10 +26,36 @@ $(document).ready(function(){
     dancer.after( 0, function(){
         //console.info(dancer.getTime())
 
+        // stop rotating when reach certain angle
+        //if (smallCubes.rotation.y < 3.142){
+           // smallCubes.rotation.y += .002;
+        //}
+        //get current coordinates
+        var cylZ = cylinderZ;
+        var cylY = cylinderY;
+
+        cylinder.rotation.z += cylZ;
+        cylinder.rotation.y += cylY;
+        // get current speed
+        var speed = cameraSpeed;
+        // apply speed
+        cylinder.position.z += speed;
+        camera.position.z += speed;
+        // init kalaedoscope
+        cubeHolder.position.z += 1;
+
+
+
+
+
     }).onceAt( 0, function () {
+        // start kick event listener
         kick.on();
+        //start cylinder moving slowly
         var cylinderZ = 0;
         var cylinderY = 0.01;
+
+        //loadSceneTwo();
         
     }).onceAt( 32.8, function () {
         cylinderZ = 0.1;
@@ -75,6 +100,8 @@ $(document).ready(function(){
         document.getElementById('loading').style.display = 'none';
     }, false );
 
+
+
     }
 
     on();
@@ -83,3 +110,8 @@ $(document).ready(function(){
     window.dancer = dancer;
 
 });
+
+function randomizeCubes(){
+    cubeHolder.rotation.x = Math.random() * 2 * Math.PI - Math.PI;
+    cubeHolder.rotation.y = Math.random() * 2 * Math.PI - Math.PI;
+}
