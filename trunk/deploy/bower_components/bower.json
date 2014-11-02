@@ -7,16 +7,9 @@
   "description": "initial setup for creating three videos synced to musis using dancer js",
   "license": "MIT",
   "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "app/bower_components",
-    "test",
-    "tests"
-  ],
   "dependencies": {
     "three.js": "*",
-    "threex": "*"
+    "threex": "*",
+    "tween.js": "git@github.com:sole/tween.js.git"
   }
 }

@@ -97,8 +97,13 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-
-
+#loading {
+    color: red;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+}
 
 
 

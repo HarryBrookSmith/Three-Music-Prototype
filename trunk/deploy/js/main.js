@@ -1,9 +1,10 @@
+var AUDIO_FILE        = '../audio/trust';
+
+
 $(document).ready(function(){
-	
-    var AUDIO_FILE        = '../audio/trust';
-    /*
-     * Dancer.js magic
-     */
+
+    // Init Visuals.js
+    if( !init() )   animate();
 
     Dancer.setOptions({
       flashSWF : 'vendor/soundmanager2.swf',
@@ -16,46 +17,46 @@ $(document).ready(function(){
         var i;
         console.log("KICK");
       },
-      offKick: decay
+      offKick: decay,
+      frequency: [2, 4]
     });
 
-    dancer.onceAt( 0, function () {
-      kick.on();
-    }).onceAt( 8.2, function () {
-    	console.log("8.2");
-    }).after( 8.2, function () {
-     // beamGroup.rotation.x += BEAM_RATE;
-      //beamGroup.rotation.y += BEAM_RATE;
-    }).onceAt( 50, function () {
-      //changeParticleMat( 'white' );
-    }).onceAt( 66.5, function () {
-     // changeParticleMat( 'pink' );
-    }).onceAt( 75, function () {
-      //changeParticleMat();
-    }).load({ src: AUDIO_FILE, codecs: [ 'mp3' ]})
+    // Let's turn this kick on right away
+    kick.on();
 
+    dancer.after( 0, function(){
+        //console.info(dancer.getTime())
+
+    }).onceAt( 0, function () {
+        kick.on();
+        var cylinderZ = 0;
+        var cylinderY = 0.01;
+        
+    }).onceAt( 32.8, function () {
+        cylinderZ = 0.1;
+    }).load({ src: AUDIO_FILE, codecs: [ 'mp3' ]})
+    // Detect Support 
     Dancer.isSupported() || loaded();
     !dancer.isLoaded() ? dancer.bind( 'loaded', loaded ) : loaded();
 
-    
- /*
-   * Three.js Setup
-   */
+    /*
+    * Three.js Setup
+    */
 
-  function on () {
-    console.info("On");
-  }
+    function on () {
+        console.info("On");
+    }
 
-  function decay () {
-    console.info("Decay");
-  }
+    function decay () {
+        //console.info("Decay");
+    }
 
-  function loaded () {
+    function loaded () {
     var
-      loading = document.getElementById( 'loading' ),
-      anchor  = document.createElement('A'),
-      supported = Dancer.isSupported(),
-      p;
+        loading = document.getElementById( 'loading' ),
+        anchor  = document.createElement('A'),
+        supported = Dancer.isSupported(),
+        p;
 
     anchor.appendChild( document.createTextNode( supported ? 'Play!' : 'Close' ) );
     anchor.setAttribute( 'href', '#' );
@@ -63,21 +64,22 @@ $(document).ready(function(){
     loading.appendChild( anchor );
 
     if ( !supported ) {
-      p = document.createElement('P');
-      p.appendChild( document.createTextNode( 'Your browser does not currently support either Web Audio API or Audio Data API. The audio may play, but the visualizers will not move to the music; check out the latest Chrome or Firefox browsers!' ) );
-      loading.appendChild( p );
+        p = document.createElement('P');
+        p.appendChild( document.createTextNode( 'Your browser does not currently support either Web Audio API or Audio Data API. The audio may play, but the visualizers will not move to the music; check out the latest Chrome or Firefox browsers!' ) );
+        loading.appendChild( p );
     }
 
     anchor.addEventListener( 'click', function () {
-      dancer.play();
-      document.getElementById('loading').style.display = 'none';
+        dancer.play();
+        cameraSpeed = 0.0129;
+        document.getElementById('loading').style.display = 'none';
     }, false );
 
-  }
+    }
 
-  on();
+    on();
 
-  // For debugging
-  window.dancer = dancer;
+    // For debugging
+    window.dancer = dancer;
 
 });
